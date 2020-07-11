@@ -1,4 +1,6 @@
+println("Starting precompilation")
 using OrdinaryDiffEq
+println("Starting tests")
 using Flux, DiffEqFlux
 using Test
 using Distributions
@@ -7,7 +9,6 @@ using LinearAlgebra, Tracker, Zygote
 
 ##callback to be used by all tests
 function cb(p,l)
-    @show p,l
     false
 end
 
@@ -18,7 +19,7 @@ end
 nn = Chain(Dense(1, 1, tanh))
 data_train = [Float32(rand(Beta(7,7))) for i in 1:100]
 tspan = (0.0,10.0)
-ffjord_test_mc = FFJORD(nn,tspan,monte_carlo=true)
+ffjord_test_mc = FFJORD(nn,tspan,Tsit5(),monte_carlo=true)
 
 function loss_adjoint(θ)
     logpx = [ffjord_test_mc(x,θ) for x in data_train]
@@ -27,7 +28,7 @@ end
 
 res = DiffEqFlux.sciml_train(loss_adjoint, ffjord_test_mc.p,
                                         ADAM(0.1), cb=cb,
-                                        maxiters = 100)
+                                        maxiters = 300)
 
 θopt = res.minimizer
 data_validate = [Float32(rand(Beta(7,7))) for i in 1:100]
@@ -44,7 +45,7 @@ learned_pdf = [exp(ffjord_test_mc(r,θopt,false)) for r in data_validate]
 nn = Chain(Dense(1, 3, tanh), Dense(3, 1, tanh))
 data_train = [Float32(rand(Normal(6.0,0.7))) for i in 1:100]
 tspan = (0.0,10.0)
-ffjord_test = FFJORD(nn,tspan,base_dist=Normal(0,2))
+ffjord_test = FFJORD(nn,tspan,Tsit5(),base_dist=Normal(0,2))
 
 function loss_adjoint(θ)
     logpx = [ffjord_test(x,θ) for x in data_train]
@@ -53,7 +54,7 @@ end
 
 res = DiffEqFlux.sciml_train(loss_adjoint, ffjord_test.p,
                                           ADAM(0.1), cb = cb,
-                                          maxiters = 100)
+                                          maxiters = 300)
 
 θopt = res.minimizer
 data_validate = [Float32(rand(Normal(6.0,0.7))) for i in 1:100]
@@ -72,7 +73,7 @@ nn = Chain(Dense(2, 2, tanh))
 mv_normal = MvNormal(μ, Σ)
 data_train = [Float32.(rand(mv_normal)) for i in 1:100]
 tspan = (0.0,10.0)
-ffjord_test = FFJORD(nn,tspan)
+ffjord_test = FFJORD(nn,tspan,Tsit5())
 
 function loss_adjoint(θ)
     logpx = [ffjord_test(x,θ) for x in data_train]
@@ -81,7 +82,7 @@ end
 
 res = DiffEqFlux.sciml_train(loss_adjoint, ffjord_test.p,
                                           ADAM(0.1), cb = cb,
-                                          maxiters = 200)
+                                          maxiters = 300)
 
 θopt = res.minimizer
 data_validate = [Float32.(rand(mv_normal)) for i in 1:100]

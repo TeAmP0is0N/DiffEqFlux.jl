@@ -1,4 +1,9 @@
-using DiffEqFlux, Flux, OrdinaryDiffEq, Test, Optim, DiffEqSensitivity
+println("Starting Precompilation")
+using Flux
+println("Starting Tests")
+using OrdinaryDiffEq, Test, Optim, DiffEqSensitivity
+println("Going to start tests!")
+using DiffEqFlux
 
 x = Float32[0.8; 0.8]
 tspan = (0.0f0,10.0f0)
