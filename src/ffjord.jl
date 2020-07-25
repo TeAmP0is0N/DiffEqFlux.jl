@@ -14,7 +14,7 @@ normalizing flows (CNF) [2]. At a high level this corresponds to the following s
 After these steps one may use the NN model and the learned θ to predict the density p_x for new values of x.
 
 ```julia
-NeuralODE(model,basedist=nothing,monte_carlo=false,tspan,args...;kwargs...)
+FFJORD(model,basedist=nothing,monte_carlo=false,tspan,args...;kwargs...)
 ```
 Arguments:
 - `model`: A Chain neural network that defines the ̇x.
@@ -22,7 +22,7 @@ Arguments:
 - `monte_carlo`: Method for calculating the trace of the Jacobian. The default monte_carlo = false calculates the Jacobian and its trace directly. monte_carlo = true uses the stochastic approach presented in [3] to provide an unbiased estimate for the trace.
 - `tspan`: The timespan to be solved on.
 - `kwargs`: Additional arguments splatted to the ODE solver. See the
-  [Common Solver Arguments](https://docs.sciml.ai/dev/basics/common_solver_opts/)
+  [Common Solver Arguments](https://diffeq.sciml.ai/dev/basics/common_solver_opts/)
   documentation for more details.
 Ref
 [1]L. S. Pontryagin, Mathematical Theory of Optimal Processes. CRC Press, 1987.

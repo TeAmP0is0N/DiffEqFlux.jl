@@ -20,11 +20,13 @@ if GROUP == "All" || GROUP == "DiffEqFlux" || GROUP == "Layers"
     @safetestset "Layers SciML Tests" begin include("layers_sciml.jl") end
     @safetestset "Layers SDE" begin include("layers_sde.jl") end
     @safetestset "Layers DDE" begin include("layers_dde.jl") end
+    @safetestset "Collocation Regression" begin include("collocation_regression.jl") end
 end
 
 if GROUP == "All" || GROUP == "DiffEqFlux" || GROUP == "BasicNeuralDE"
     @safetestset "Neural DE Tests" begin include("neural_de.jl") end
     @safetestset "Augmented Neural DE Tests" begin include("augmented_nde.jl") end
+    @safetestset "Neural Graph DE" begin include("neural_gde.jl") end
     @safetestset "Neural ODE MM Tests" begin include("neural_ode_mm.jl") end
     @safetestset "Fast Neural ODE Tests" begin include("fast_neural_ode.jl") end
     @safetestset "Tensor Product Layer" begin include("tensor_product_test.jl") end

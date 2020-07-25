@@ -11,7 +11,7 @@ makedocs(
                              assets = ["assets/favicon.ico"],
                              canonical="https://diffeqflux.sciml.ai/stable/"),
     pages=[
-        "Home" => "index.md",
+        "DiffEqFlux.jl: Generalized Physics-Informed and Scientific Machine Learning (SciML)" => "index.md",
         "Tutorials" => Any[
             "examples/optimization_ode.md",
             "examples/optimization_sde.md",
@@ -24,6 +24,7 @@ makedocs(
             "examples/normalizing_flows.md",
             "examples/local_minima.md",
             "examples/neural_sde.md",
+            "examples/collocation.md",
             "examples/pde_constrained.md",
             "examples/optimal_control.md",
             "examples/feedback_control.md",
@@ -33,7 +34,8 @@ makedocs(
             "examples/jump.md",
             "examples/universal_diffeq.md",
             "examples/minibatch.md",
-            "examples/tensor_layer.md"
+            "examples/tensor_layer.md",
+            "examples/neural_gde.md"
         ],
         "Layers" => Any[
         "Classical Basis Layers" => "layers/BasisLayers.md",
@@ -42,8 +44,10 @@ makedocs(
         "Spline Layer" => "layers/SplineLayer.md",
         "Neural Differential Equation Layers" => "layers/NeuralDELayers.md",
         ],
+        "Controlling Choices of Adjoints" => "ControllingAdjoints.md",
         "Use with Flux Chain and train!" => "Flux.md",
         "FastChain" => "FastChain.md",
+        "Smoothed Collocation" => "Collocation.md",
         "GPUs" => "GPUs.md",
         "sciml_train" => "Scimltrain.md",
         "Benchmark" => "Benchmark.md"
